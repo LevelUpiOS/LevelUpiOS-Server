@@ -26,3 +26,6 @@ logging:
         type:
           descriptor:
             sql: trace
+
+jwt:
+  key: S7W8YV7zcK6p+Ur0l2FnVHlHO11KI1vjwDrrPUwnHy4=
