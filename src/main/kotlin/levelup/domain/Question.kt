@@ -10,8 +10,13 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToOne
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.SQLRestriction
+import support.SoftDeleteEntity
 
 @Entity
+@SQLDelete(sql = "UPDATE question SET deleted_at = NOW() WHERE question_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 class Question(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id")
@@ -26,6 +31,6 @@ class Question(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id")
     val id: Long = 0L
-) {
+) : SoftDeleteEntity() {
     fun isCompatible(answer: Any) = solution.answer::class == answer::class
 }

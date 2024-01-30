@@ -10,8 +10,13 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.SQLRestriction
+import support.SoftDeleteEntity
 
 @Entity
+@SQLDelete(sql = "UPDATE submission SET deleted_at = NOW() WHERE submission_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 class Submission(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -23,6 +28,6 @@ class Submission(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "submission_id")
     val id: Long = 0L
-) {
+) : SoftDeleteEntity() {
     val score: Double get() = 100.0 * answers.count { it.isCorrect } / answers.size
 }

@@ -6,8 +6,13 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.SQLRestriction
+import support.SoftDeleteEntity
 
 @Entity
+@SQLDelete(sql = "UPDATE exam SET deleted_at = NOW() WHERE exam_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 class Exam(
     val name: String,
 
@@ -17,7 +22,7 @@ class Exam(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exam_id")
     val id: Long = 0L
-) {
+) : SoftDeleteEntity() {
     fun add(question: Question) = questions.add(question)
 
     fun mark(user: User, answers: List<Any>): Submission {

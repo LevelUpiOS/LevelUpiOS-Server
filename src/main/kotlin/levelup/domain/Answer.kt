@@ -12,9 +12,14 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import jakarta.transaction.NotSupportedException
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.SQLRestriction
+import support.SoftDeleteEntity
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@SQLDelete(sql = "UPDATE answer SET deleted_at = NOW() WHERE answer_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 abstract class Answer(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "submission_id")
@@ -27,7 +32,7 @@ abstract class Answer(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answer_id")
     val id: Long = 0L
-) {
+) : SoftDeleteEntity() {
     abstract val guess: Any
     val solution get() = question.solution
     val isCorrect get() = solution.answer == guess
