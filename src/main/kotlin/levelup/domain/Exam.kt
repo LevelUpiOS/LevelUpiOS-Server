@@ -28,9 +28,12 @@ class Exam(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exam_id")
-    val id: Long = 0L
+    override val id: Long = 0L
 ) : SoftDeleteEntity() {
-    fun add(question: Question) = questions.add(question)
+    fun add(question: Question): Question {
+        questions.add(question)
+        return question
+    }
 
     fun mark(user: User, answers: List<Any>): Submission {
         check(questions.isNotEmpty()) { "시험 문제가 없습니다." }

@@ -22,7 +22,7 @@ class User(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    val id: Long = 0L
+    override val id: Long = 0L
 ) : SoftDeleteEntity()
 
 enum class UserRole { USER, ADMIN }

@@ -31,7 +31,7 @@ class Submission(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "submission_id")
-    val id: Long = 0L
+    override val id: Long = 0L
 ) : SoftDeleteEntity() {
     val score: Double get() = 100.0 * answers.count { it.isCorrect } / answers.size
 }

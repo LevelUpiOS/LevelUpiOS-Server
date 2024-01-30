@@ -31,7 +31,7 @@ abstract class Answer(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answer_id")
-    val id: Long = 0L
+    override val id: Long = 0L
 ) : SoftDeleteEntity() {
     abstract val guess: Any
     val solution get() = question.solution

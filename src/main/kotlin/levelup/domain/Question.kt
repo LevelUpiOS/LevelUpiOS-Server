@@ -30,7 +30,7 @@ class Question(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id")
-    val id: Long = 0L
+    override val id: Long = 0L
 ) : SoftDeleteEntity() {
     fun isCompatible(answer: Any) = solution.answer::class == answer::class
 }

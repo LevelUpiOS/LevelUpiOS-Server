@@ -21,7 +21,7 @@ abstract class Solution(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "solution_id")
-    val id: Long = 0L
+    override val id: Long = 0L
 ) : SoftDeleteEntity() {
     abstract val answer: Any
 }

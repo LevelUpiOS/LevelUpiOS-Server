@@ -22,5 +22,5 @@ class Category(
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    val id: Long = 0L
+    override val id: Long = 0L
 ) : SoftDeleteEntity()
