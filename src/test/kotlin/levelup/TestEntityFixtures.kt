@@ -13,7 +13,10 @@ fun createCategory(
     description: String = "Description"
 ) = Category(name, description)
 
-fun createExam(name: String = "Exam") = Exam(name)
+fun createExam(
+    category: Category = createCategory(),
+    name: String = "Exam"
+) = Exam(category, name)
 
 fun createSolution(
     answer: Boolean = true,

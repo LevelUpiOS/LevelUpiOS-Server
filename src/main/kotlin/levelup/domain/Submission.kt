@@ -22,6 +22,10 @@ class Submission(
     @JoinColumn(name = "user_id")
     val user: User,
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exam_id")
+    val exam: Exam,
+
     @OneToMany(mappedBy = "submission", cascade = [CascadeType.ALL], orphanRemoval = true)
     var answers: MutableList<Answer> = mutableListOf(),
 

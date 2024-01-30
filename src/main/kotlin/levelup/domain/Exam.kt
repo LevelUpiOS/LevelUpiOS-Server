@@ -2,9 +2,12 @@ package levelup.domain
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.SQLRestriction
@@ -14,6 +17,10 @@ import support.SoftDeleteEntity
 @SQLDelete(sql = "UPDATE exam SET deleted_at = NOW() WHERE exam_id = ?")
 @SQLRestriction("deleted_at IS NULL")
 class Exam(
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    val category: Category,
+
     val name: String,
 
     @OneToMany(mappedBy = "exam")
@@ -29,7 +36,7 @@ class Exam(
         check(questions.isNotEmpty()) { "시험 문제가 없습니다." }
         require(questions.size == answers.size) { "정답의 길이가 맞지 않습니다." }
 
-        return Submission(user).apply {
+        return Submission(user, this).apply {
             this.answers = (questions zip answers).map { (question, answer) ->
                 require(question.isCompatible(answer)) { "문제의 타입과 맞지 않습니다." }
                 createAnswer(this, question, answer)
