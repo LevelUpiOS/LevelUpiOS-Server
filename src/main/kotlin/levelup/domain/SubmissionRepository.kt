@@ -1,5 +1,22 @@
 package levelup.domain
 
+import org.springframework.data.jpa.repository.Query
 import support.EntityRepository
 
-interface SubmissionRepository : EntityRepository<Submission, Long>
+interface SubmissionRepository : EntityRepository<Submission, Long> {
+    @Query("SELECT DISTINCT s " +
+            "FROM Submission s " +
+            "WHERE s.id " +
+            "IN " +
+            "(SELECT MAX (s.id) " +
+            "FROM Submission s " +
+            "GROUP BY s.exam)")
+    fun findLatestSubmissionsByUser(userId: Long): List<Submission>
+
+    @Query("SELECT DISTINCT s " +
+            "FROM Submission s " +
+            "JOIN FETCH s.answers a " +
+            "JOIN FETCH a.question.solution " +
+            "WHERE s.id = :submissionId")
+    fun findWithAnswers(submissionId: Long): Submission
+}

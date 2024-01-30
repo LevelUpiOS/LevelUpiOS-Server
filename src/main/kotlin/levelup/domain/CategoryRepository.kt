@@ -1,5 +1,9 @@
 package levelup.domain
 
+import org.springframework.data.jpa.repository.Query
 import support.EntityRepository
 
-interface CategoryRepository : EntityRepository<Category, Long>
+interface CategoryRepository : EntityRepository<Category, Long> {
+    @Query("SELECT DISTINCT c FROM Category c JOIN FETCH c.exams")
+    fun findAllWithExams(): List<Category>
+}
