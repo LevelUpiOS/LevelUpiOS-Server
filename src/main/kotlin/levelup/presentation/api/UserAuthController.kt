@@ -1,5 +1,7 @@
 package levelup.presentation.api
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import levelup.application.UserService
@@ -10,12 +12,17 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@Tag(name = "Authentication", description = "User 인증 관련 API")
 @RestController
 @RequestMapping("/api/v1/auth")
 class UserAuthController(
     private val userService: UserService,
     private val tokenProvider: TokenProvider
 ) {
+    @Operation(
+        summary = "인증 토큰 생성",
+        description = "앱을 처음 설치해서 인증 토큰이 없는 경우 호출, 새로운 유저를 생성해서 인증 토큰을 발급해서 전달"
+    )
     @PostMapping
     fun generate(response: HttpServletResponse): ResponseEntity<UserAuthResponse> {
         val user = userService.generate()

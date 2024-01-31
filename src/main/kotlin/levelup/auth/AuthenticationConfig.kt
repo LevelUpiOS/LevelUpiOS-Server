@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class AuthenticationConfig(private val tokenProvider: TokenProvider) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(LoginUserInterceptor(tokenProvider))
-            .excludePathPatterns("/api/v*/auth", "error")
+            .addPathPatterns("/api/**")
+            .excludePathPatterns("/api/v*/auth")
     }
 }

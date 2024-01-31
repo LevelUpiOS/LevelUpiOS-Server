@@ -1,5 +1,7 @@
 package levelup.presentation.api
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import levelup.application.ExamService
 import levelup.presentation.api.dto.ExamResponse
 import levelup.presentation.api.dto.ExamSolveRequest
@@ -13,17 +15,26 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@Tag(name = "Exam", description = "시험 관련 API")
 @RestController
 @RequestMapping("/api/v1/exams")
 class ExamController(
     private val examService: ExamService
 ) {
+    @Operation(
+        summary = "시험 id로 조회",
+        description = "시험 id를 이용해서 시험 내용과 문제 정보 조회"
+    )
     @GetMapping("/{examId}")
     fun find(@PathVariable examId: Long): ResponseEntity<ExamResponse> {
         val exam = examService.findWithQuestions(examId)
         return ResponseEntity.ok(ExamResponse(exam.id, exam.name, exam.questions.map { it.paragraph }))
     }
 
+    @Operation(
+        summary = "시험문제 풀기",
+        description = "정답을 입력해서 시험 문제를 풀면 시험 결과 반환",
+    )
     @PostMapping("/{examId}")
     fun solve(
         @RequestAttribute loginId: Long,
