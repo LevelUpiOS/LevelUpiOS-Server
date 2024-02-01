@@ -48,5 +48,5 @@ class OXAnswer(
 
 inline fun <reified T> createAnswer(submission: Submission, question: Question, guess: T) = when (guess) {
     is Boolean -> OXAnswer(submission, question, guess)
-    else -> throw NotSupportedException("지원하지 않는 정답 타입입니다. ${T::class.simpleName}")
+    else -> throw IllegalArgumentException("지원하지 않는 정답 타입입니다. ${T::class.simpleName}")
 }

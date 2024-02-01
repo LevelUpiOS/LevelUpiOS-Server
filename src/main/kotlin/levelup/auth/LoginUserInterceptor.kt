@@ -16,7 +16,7 @@ class LoginUserInterceptor(
     }
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        val cookie = request.cookies.find { it.name == AUTH_TOKEN }
+        val cookie = request.cookies?.find { it.name == AUTH_TOKEN }
             ?: throw AuthenticationException("인증 쿠키가 존재하지 않습니다.")
         if (!tokenProvider.isValidToken(cookie.value)) throw AuthenticationException("잘못된 인증 쿠키입니다.")
         request.setAttribute(LOGIN_ID, tokenProvider.getSubject(cookie.value))
