@@ -1,0 +1,56 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Add executable permission to gradlew
+        run: chmod +x gradlew
+
+      - name: Run test
+        run: ./gradlew test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get github action IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+
+      - name: Configure AWS credential
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Add github action IP to Security Group
+        run: |
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_KEY }}
+          script: |
+            ./restart
+
+      - name: Remove github action IP to Security Group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
