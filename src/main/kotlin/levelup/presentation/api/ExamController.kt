@@ -22,7 +22,7 @@ class ExamController(
     private val examService: ExamService
 ) {
     @Operation(
-        summary = "시험 id로 조회",
+        summary = "시험 문제 조회",
         description = "시험 id를 이용해서 시험 내용과 문제 정보 조회"
     )
     @GetMapping("/{examId}")
@@ -32,7 +32,7 @@ class ExamController(
     }
 
     @Operation(
-        summary = "시험문제 풀기",
+        summary = "시험 문제 풀기",
         description = "정답을 입력해서 시험 문제를 풀면 시험 결과 반환",
     )
     @PostMapping("/{examId}")

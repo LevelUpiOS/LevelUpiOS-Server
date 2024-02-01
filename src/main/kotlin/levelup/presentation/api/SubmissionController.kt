@@ -29,7 +29,7 @@ class SubmissionController(
     }
 
     @Operation(
-        summary = "id로 Submission 조회",
+        summary = "Submission 조회",
         description = "Submission의 시험 점수나 채점 결과 반환"
     )
     @GetMapping("/{submissionId}")
