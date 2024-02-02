@@ -26,7 +26,8 @@ services:
 
   spring:
     container_name: levelup-app
-    image: azul/zulu-openjdk-alpine:17
+    build: .
+    image: yeongwoo:LevelUpiOS
     ports:
       - "80:8080"
     environment:
@@ -35,16 +36,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       JWT_KEY: ${JWT_KEY}
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
     depends_on:
       - mysql
     networks:
       - levelup-network
-    volumes:
-      - ./:/app
-    working_dir: /app
     restart: always
 
 networks:
