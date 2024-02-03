@@ -105,3 +105,16 @@ CREATE TABLE ox_answer
     PRIMARY KEY (answer_id),
     FOREIGN KEY (answer_id) REFERENCES answer (answer_id)
 );
+
+CREATE TABLE bookmark
+(
+    bookmark_id BIGINT   NOT NULL AUTO_INCREMENT,
+    user_id     BIGINT   NOT NULL,
+    question_id BIGINT   NOT NULL,
+    created_at  DATETIME NOT NULL DEFAULT NOW(),
+    updated_at  DATETIME NOT NULL DEFAULT NOW(),
+
+    PRIMARY KEY (bookmark_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (question_id) REFERENCES question (question_id)
+);

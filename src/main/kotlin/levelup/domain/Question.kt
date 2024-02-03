@@ -33,4 +33,6 @@ class Question(
     override val id: Long = 0L
 ) : SoftDeleteEntity() {
     fun isCompatible(answer: Any) = solution.answer::class == answer::class
+
+    fun bookmark(user: User) = Bookmark(user, this)
 }
