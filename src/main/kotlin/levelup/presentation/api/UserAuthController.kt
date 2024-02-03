@@ -28,6 +28,8 @@ class UserAuthController(
         val user = userService.generate()
         val token = tokenProvider.createToken(user.id.toString(), user.role)
         response.addCookie(Cookie(TokenProvider.AUTH_TOKEN, token))
-        return ResponseEntity.ok(UserAuthResponse(token))
+        return ResponseEntity.ok(UserAuthResponse(generateCookieHeader(token)))
     }
+
+    private fun generateCookieHeader(token: String) = "${TokenProvider.AUTH_TOKEN}=$token"
 }
