@@ -3,7 +3,7 @@ package levelup.presentation.api
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import levelup.application.ExamService
-import levelup.presentation.api.dto.ExamResponse
+import levelup.presentation.api.dto.ExamQuestionResponse
 import levelup.presentation.api.dto.ExamSolveRequest
 import levelup.presentation.api.dto.SubmissionResponse
 import org.springframework.http.ResponseEntity
@@ -26,9 +26,9 @@ class ExamController(
         description = "시험 id를 이용해서 시험 내용과 문제 정보 조회"
     )
     @GetMapping("/{examId}")
-    fun find(@PathVariable examId: Long): ResponseEntity<ExamResponse> {
+    fun find(@PathVariable examId: Long): ResponseEntity<ExamQuestionResponse> {
         val exam = examService.findWithQuestions(examId)
-        return ResponseEntity.ok(ExamResponse(exam.id, exam.name, exam.questions.map { it.paragraph }))
+        return ResponseEntity.ok(ExamQuestionResponse(exam))
     }
 
     @Operation(
