@@ -3,6 +3,7 @@ package levelup.presentation.api
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import levelup.application.ExamService
+import levelup.application.QuestionService
 import levelup.presentation.api.dto.ExamQuestionResponse
 import levelup.presentation.api.dto.ExamSolveRequest
 import levelup.presentation.api.dto.SubmissionResponse
@@ -19,16 +20,18 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/exams")
 class ExamController(
-    private val examService: ExamService
+    private val examService: ExamService,
+    private val questionService: QuestionService
 ) {
     @Operation(
         summary = "시험 문제 조회",
         description = "시험 id를 이용해서 시험 내용과 문제 정보 조회"
     )
     @GetMapping("/{examId}")
-    fun find(@PathVariable examId: Long): ResponseEntity<ExamQuestionResponse> {
-        val exam = examService.findWithQuestions(examId)
-        return ResponseEntity.ok(ExamQuestionResponse(exam))
+    fun find(@RequestAttribute loginId: Long, @PathVariable examId: Long): ResponseEntity<ExamQuestionResponse> {
+        val exam = examService.findWithQuestions(loginId)
+        val bookmarkQuestions = questionService.findBookmarkQuestions(loginId, examId)
+        return ResponseEntity.ok(ExamQuestionResponse(exam, bookmarkQuestions))
     }
 
     @Operation(

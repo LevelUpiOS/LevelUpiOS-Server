@@ -9,4 +9,31 @@ interface QuestionRepository : EntityRepository<Question, Long> {
             "JOIN FETCH e.questions " +
             "WHERE e.id = :examId")
     fun findWithQuestions(examId: Long): Exam
+
+    @Query("SELECT q " +
+            "FROM Question q " +
+            "JOIN FETCH q.exam e " +
+            "JOIN FETCH e.category c " +
+            "JOIN FETCH q.solution s ")
+    override fun findAll(): List<Question>
+
+    @Query("SELECT q " +
+            "FROM Question q " +
+            "JOIN FETCH q.exam e " +
+            "JOIN FETCH e.category c " +
+            "JOIN FETCH q.solution s " +
+            "WHERE q.id IN " +
+            "(SELECT b.question.id " +
+            "FROM Bookmark b " +
+            "WHERE b.user.id = :userId)")
+    fun findBookmarkQuestions(userId: Long): List<Question>
+
+    @Query("SELECT q " +
+            "FROM Question q " +
+            "WHERE q.exam.id = :examId " +
+            "AND q.id IN " +
+            "(SELECT b.question.id " +
+            "FROM Bookmark b " +
+            "WHERE b.user.id = :userId)")
+    fun findBookmarkQuestionsInExam(userId: Long, examId: Long): Set<Question>
 }

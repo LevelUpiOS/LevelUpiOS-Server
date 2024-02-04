@@ -22,4 +22,10 @@ class QuestionService(
     }
 
     fun unmark(userId: Long, questionId: Long) = bookmarkRepository.delete(userId, questionId)
+
+    fun findAll() = questionRepository.findAll()
+
+    fun findBookmarkQuestions(userId: Long) = questionRepository.findBookmarkQuestions(userId)
+
+    fun findBookmarkQuestions(userId: Long, examId: Long) = questionRepository.findBookmarkQuestionsInExam(userId, examId)
 }
