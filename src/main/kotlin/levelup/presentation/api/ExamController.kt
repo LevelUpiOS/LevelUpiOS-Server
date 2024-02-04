@@ -29,7 +29,7 @@ class ExamController(
     )
     @GetMapping("/{examId}")
     fun find(@RequestAttribute loginId: Long, @PathVariable examId: Long): ResponseEntity<ExamQuestionResponse> {
-        val exam = examService.findWithQuestions(loginId)
+        val exam = examService.findWithQuestions(examId)
         val bookmarkQuestions = questionService.findBookmarkQuestions(loginId, examId)
         return ResponseEntity.ok(ExamQuestionResponse(exam, bookmarkQuestions))
     }
