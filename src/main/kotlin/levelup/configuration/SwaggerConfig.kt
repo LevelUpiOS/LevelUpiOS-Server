@@ -12,15 +12,7 @@ import org.springframework.context.annotation.Configuration
 class SwaggerConfig {
     @Bean
     fun openAPI(): OpenAPI = OpenAPI()
-        .components(
-            Components().addSecuritySchemes(
-                TokenProvider.AUTH_TOKEN,
-                SecurityScheme()
-                    .type(SecurityScheme.Type.HTTP)
-                    .scheme("bearer")
-                    .bearerFormat("JWT")
-            )
-        )
+        .components(Components())
         .info(apiInfo)
 
     private val apiInfo = Info()
