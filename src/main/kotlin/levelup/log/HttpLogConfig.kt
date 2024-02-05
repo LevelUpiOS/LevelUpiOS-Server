@@ -8,6 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class HttpLogConfig : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(HttpLogInterceptor()).order(1)
-            .excludePathPatterns("/error", "/swagger-ui/**", "/v3/api-docs/**")
+            .addPathPatterns("/api/**")
     }
 }
