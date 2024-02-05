@@ -1,15 +1,13 @@
-package levelup.auth
+package levelup.log
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class AuthenticationConfig(private val tokenProvider: TokenProvider) : WebMvcConfigurer {
+class HttpLogConfig : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(LoginUserInterceptor(tokenProvider))
-            .addPathPatterns("/api/**")
-            .excludePathPatterns("/api/v*/auth")
-            .order(2)
+        registry.addInterceptor(HttpLogInterceptor()).order(1)
+            .excludePathPatterns("/error", "/swagger-ui/**", "/v3/api-docs/**")
     }
 }

@@ -6,4 +6,4 @@ import org.springframework.data.repository.findByIdOrNull
 interface EntityRepository<T, ID> : JpaRepository<T, ID>
 
 inline fun <reified T, ID> EntityRepository<T, ID>.find(id: ID): T =
-    findByIdOrNull(id) ?: throw NoSuchElementException("${T::class.simpleName}에 id ${id}가 존재하지 않습니다.")
+    findByIdOrNull(id) ?: throw NoSuchElementException("${T::class.simpleName}에 id가 존재하지 않습니다. id: $id")
