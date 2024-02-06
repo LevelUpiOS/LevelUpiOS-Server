@@ -19,6 +19,6 @@ class ExamService(
     fun findWithQuestions(examId: Long) = questionRepository.findWithQuestions(examId)
 
     fun mark(userId: Long, examId: Long, answers: List<Any>) = submissionRepository.save(
-        examRepository.find(examId).mark(userRepository.find(userId), answers)
+        examRepository.findWithSolution(examId).mark(userRepository.find(userId), answers)
     )
 }
