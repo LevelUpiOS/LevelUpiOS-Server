@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam
 import support.createCookie
 import support.invalidateCookie
 
-private const val ADMIN_BASE_PATH = "/admin"
+private const val ADMIN_ID = "ADMIN"
+private const val AUTHENTICATE_PATH = "/auth"
+private const val LOGOUT_PATH = "/logout"
 
 @Controller
 @RequestMapping(ADMIN_BASE_PATH)
@@ -24,12 +26,6 @@ class AdminUserController(
     private val adminUserService: AdminUserService,
     private val categoryService: CategoryService
 ) {
-    companion object {
-        private const val ADMIN_ID = "ADMIN"
-        private const val AUTHENTICATE_PATH = "/auth"
-        private const val LOGOUT_PATH = "/logout"
-    }
-
     @GetMapping(AUTHENTICATE_PATH)
     fun loginForm() = "admin-login"
 
