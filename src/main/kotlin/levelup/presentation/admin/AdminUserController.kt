@@ -2,6 +2,7 @@ package levelup.presentation.admin
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import levelup.application.CategoryService
 import levelup.application.admin.AdminUserService
 import levelup.auth.TokenProvider
 import levelup.domain.UserRole
@@ -20,7 +21,8 @@ private const val ADMIN_BASE_PATH = "/admin"
 @RequestMapping(ADMIN_BASE_PATH)
 class AdminUserController(
     private val tokenProvider: TokenProvider,
-    private val adminUserService: AdminUserService
+    private val adminUserService: AdminUserService,
+    private val categoryService: CategoryService
 ) {
     companion object {
         private const val ADMIN_ID = "ADMIN"
@@ -55,5 +57,9 @@ class AdminUserController(
     }
 
     @GetMapping
-    fun home() = "admin-home"
+    fun home(model: Model): String {
+        val categories = categoryService.findWithExam()
+        model.addAttribute("categories", categories)
+        return "admin-home"
+    }
 }

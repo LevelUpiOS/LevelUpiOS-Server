@@ -1,12 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko-kr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/bootstrap.min.css" th:href="/bootstrap.min.css"/>
-    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap.min.css" th:href="|/bootstrap.min.css|"/>
+    <title>Home</title>
 </head>
 <body>
-<form action="/admin/auth/logout" method="post"><input class="btn btn-primary" type="submit" value="Logout"></form>
-<script href="../static/bootstrap.min.js" th:href="/bootstrap.min.js"></script>
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+    <div class="container-fluid">
+        <a href="/admin" class="navbar-brand">LevelUpiOS</a>
+        <form action="/admin/auth/logout" method="post">
+            <input class="btn btn-primary" type="submit" value="Logout">
+        </form>
+    </div>
+</nav>
+<div class="container">
+    <div class="hstack justify-content-between mb-2">
+        <h1>Category</h1>
+        <form action="/admin/categories/create">
+            <input class="btn btn-primary" type="submit" value="Add Category">
+        </form>
+    </div>
+
+    <div th:each="category: ${categories}">
+        <div class="mb-2 list-group">
+            <div class="list-group-item d-flex justify-content-between align-items-center bg-secondary-subtle">
+                <span th:text="${category.name}">Category Name</span>
+                <span>
+                    <span class="me-3 opacity-50" th:text="${category.description}">Category Description</span>
+                    <span class="badge bg-primary rounded-pill" th:text="${category.exams.size()}">10</span>
+                </span>
+            </div>
+            <div th:each="exam: ${category.exams}">
+                <a class="list-group-item d-flex justify-content-between align-items-center" th:href="|/admin/exams/${exam.id}|">
+                    <span class="ms-4" th:text="${exam.name}">Exam Name</span>
+                    <img src="../static/icon/chevron-right.svg" th:src="|/icon/chevron-right.svg|">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script href="../static/bootstrap.min.js" th:href="|/bootstrap.min.js|"></script>
 </body>
 </html>
