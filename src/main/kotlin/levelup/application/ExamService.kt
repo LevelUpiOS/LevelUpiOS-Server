@@ -16,6 +16,7 @@ class ExamService(
     private val questionRepository: QuestionRepository,
     private val submissionRepository: SubmissionRepository
 ) {
+    @Transactional(readOnly = true)
     fun findWithQuestions(examId: Long) = questionRepository.findWithQuestions(examId)
 
     fun mark(userId: Long, examId: Long, answers: List<Any>) = submissionRepository.save(

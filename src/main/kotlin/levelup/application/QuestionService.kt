@@ -9,18 +9,20 @@ import org.springframework.transaction.annotation.Transactional
 import support.find
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 class QuestionService(
     private val userRepository: UserRepository,
     private val questionRepository: QuestionRepository,
     private val bookmarkRepository: BookmarkRepository
 ) {
+    @Transactional
     fun mark(userId: Long, questionId: Long) {
         val user = userRepository.find(userId)
         val question = questionRepository.find(questionId)
         bookmarkRepository.save(question.bookmark(user))
     }
 
+    @Transactional
     fun unmark(userId: Long, questionId: Long) = bookmarkRepository.delete(userId, questionId)
 
     fun findAll() = questionRepository.findAll()
