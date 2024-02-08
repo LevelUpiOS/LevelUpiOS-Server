@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko-kr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/bootstrap.min.css" th:href="|/bootstrap.min.css|"/>
+    <link rel="stylesheet" href="../../static/bootstrap.min.css" th:href="|/bootstrap.min.css|"/>
     <title>Home</title>
 </head>
 <body>
@@ -34,7 +34,7 @@
             <div th:each="exam: ${category.exams}">
                 <a class="list-group-item d-flex justify-content-between align-items-center" th:href="|/admin/exams/${exam.id}|">
                     <span class="ms-4" th:text="${exam.name}">Exam Name</span>
-                    <img src="../static/icon/chevron-right.svg" th:src="|/icon/chevron-right.svg|">
+                    <img src="../../static/icon/chevron-right.svg" th:src="|/icon/chevron-right.svg|">
                 </a>
             </div>
         </div>

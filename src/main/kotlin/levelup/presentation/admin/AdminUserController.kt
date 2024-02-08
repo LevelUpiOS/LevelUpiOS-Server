@@ -27,7 +27,7 @@ class AdminUserController(
     private val categoryService: CategoryService
 ) {
     @GetMapping(AUTHENTICATE_PATH)
-    fun loginForm() = "admin-login"
+    fun loginForm() = "admin/login-form"
 
     @PostMapping(AUTHENTICATE_PATH)
     fun login(
@@ -41,7 +41,7 @@ class AdminUserController(
             "redirect:$ADMIN_BASE_PATH"
         } else {
             model.addAttribute("loginError", true)
-            "admin-login"
+            "admin/login-form"
         }
     }
 
@@ -56,6 +56,6 @@ class AdminUserController(
     fun home(model: Model): String {
         val categories = categoryService.findWithExam()
         model.addAttribute("categories", categories)
-        return "admin-home"
+        return "admin/home"
     }
 }
