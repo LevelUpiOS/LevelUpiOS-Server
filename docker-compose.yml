@@ -36,6 +36,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       JWT_KEY: ${JWT_KEY}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     depends_on:
       - mysql
     networks:

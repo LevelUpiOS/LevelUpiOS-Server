@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko-kr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/bootstrap.min.css" th:href="/bootstrap.min.css"/>
+    <title>ADMIN</title>
+</head>
+<body>
+<div class="container pt-5">
+    <h1 class="mb-3">관리자 로그인</h1>
+    <form action="" method="post">
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input name="password" class="form-control" th:classappend="${loginError != null ? 'is-invalid' : ''}"
+                   type="password">
+            <label class="invalid-feedback" th:if="${loginError != null}">비밀번호가 일치하지 않습니다.</label>
+        </div>
+        <button type="submit" class="btn btn-primary ps-4 pe-4">Login</button>
+    </form>
+</div>
+<script href="../static/bootstrap.min.js" th:href="/bootstrap.min.js"></script>
+</body>
+</html>

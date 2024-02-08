@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import support.logger
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = ["levelup.presentation.api"])
 class ApiControllerAdvice {
     @ExceptionHandler(IllegalArgumentException::class)
     fun illegalArgumentExceptions(e: IllegalArgumentException, request: HttpServletRequest) =

@@ -11,5 +11,10 @@ class AuthenticationConfig(private val tokenProvider: TokenProvider) : WebMvcCon
             .addPathPatterns("/api/**")
             .excludePathPatterns("/api/v*/auth")
             .order(2)
+
+        registry.addInterceptor(AdminUserInterceptor(tokenProvider))
+            .addPathPatterns("/admin")
+            .excludePathPatterns("/admin/auth")
+            .order(3)
     }
 }

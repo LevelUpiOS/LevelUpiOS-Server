@@ -9,5 +9,6 @@ class HttpLogConfig : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(HttpLogInterceptor()).order(1)
             .addPathPatterns("/api/**")
+            .addPathPatterns("/admin/**")
     }
 }

@@ -6,7 +6,6 @@ import levelup.domain.OXSolution
 import levelup.domain.Question
 import levelup.domain.Solution
 import levelup.domain.User
-import levelup.domain.UserRole
 
 fun createCategory(
     name: String = "Category",
@@ -29,6 +28,4 @@ fun createQuestion(
     solution: Solution = createSolution()
 ) = Question(exam, paragraph, solution)
 
-fun createUser(
-    role: UserRole = UserRole.USER
-) = User(role)
+fun createUser() = User()

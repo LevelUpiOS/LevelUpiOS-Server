@@ -46,6 +46,11 @@ class TokenProvider(
         }
     }
 
+    fun hasAuthority(token: String, of: UserRole): Boolean {
+        val claims = getClaims(token).body
+        return claims[ROLE] == of.name
+    }
+
     private fun getClaims(token: String) = Jwts.parserBuilder()
         .setSigningKey(key.encoded)
         .build()
