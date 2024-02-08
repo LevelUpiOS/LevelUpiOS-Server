@@ -16,7 +16,7 @@ import support.createCookie
 import support.invalidateCookie
 
 private const val ADMIN_ID = "ADMIN"
-private const val AUTHENTICATE_PATH = "/auth"
+const val AUTHENTICATE_PATH = "/auth"
 private const val LOGOUT_PATH = "/logout"
 
 @Controller

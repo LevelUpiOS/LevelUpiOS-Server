@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko-kr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap.min.css" th:href="|/bootstrap.min.css|"/>
+    <title>Add Category</title>
+</head>
+<body>
+<div th:replace="~{admin/fragments/navbar.html::nav}"></div>
+<div class="container">
+    <h1 class="mb-3">Add Category</h1>
+    <form action="" method="post">
+        <div class="mb-3">
+            <label class="form-label">name</label>
+            <input type="text" class="form-control" name="name">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">description</label>
+            <input type="text" class="form-control" name="description">
+        </div>
+        <input type="submit" class="btn btn-primary">
+    </form>
+</div>
+<script src="/static/bootstrap.min.js" th:src="|/bootstrap.min.js|"></script>
+</body>
+</html>
