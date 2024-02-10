@@ -8,29 +8,35 @@
 <body>
 <div th:replace="~{admin/fragments/navbar.html::nav}"></div>
 <div class="container">
-    <div class="hstack justify-content-between mb-2">
+    <div class="hstack justify-content-between mb-3">
         <h1>Category</h1>
         <form action="/admin/categories/create">
             <input class="btn btn-primary" type="submit" value="Add Category">
         </form>
     </div>
 
-    <div th:each="category: ${categories}">
-        <div class="mb-2 list-group">
-            <div class="list-group-item d-flex justify-content-between align-items-center bg-secondary-subtle">
-                <span th:text="${category.name}">Category Name</span>
-                <span>
-                    <span class="me-3 opacity-50" th:text="${category.description}">Category Description</span>
-                    <span class="badge bg-primary rounded-pill" th:text="${category.exams.size()}">10</span>
-                </span>
+    <div class="container mt-4 mb-4" th:each="category: ${categories}">
+        <div class="mb-2 d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-baseline">
+                <h3 class="me-3 ms-2" th:text="${category.name}">Category Name</h3>
+                <span class="me-3 opacity-50" th:text="${category.description}">Category Description</span>
+                <span class="badge bg-primary rounded-pill" th:text="${category.exams.size()}">10</span>
             </div>
-            <div th:each="exam: ${category.exams}">
-                <a class="list-group-item d-flex justify-content-between align-items-center" th:href="|/admin/exams/${exam.id}|">
-                    <span class="ms-4" th:text="${exam.name}">Exam Name</span>
-                    <img src="/static/icon/chevron-right.svg" th:src="|/icon/chevron-right.svg|">
-                </a>
-            </div>
+            <form class="text-end" action="/admin/exams/create">
+                <input type="hidden" name="categoryId" value="1" th:value="${category.id}">
+                <input type="submit" class="btn btn-primary" value="Add Exam">
+            </form>
         </div>
+        <div class="text-center" th:if="${category.exams.isEmpty()}">
+            <span class="text-secondary">시험이 없습니다.</span>
+        </div>
+        <ul class="list-group" th:each="exam: ${category.exams}">
+            <a class="list-group-item d-flex justify-content-between align-items-center"
+               th:href="|/admin/exams/${exam.id}|">
+                <span th:text="${exam.name}">Exam Name</span>
+                <img src="/static/icon/chevron-right.svg" th:src="|/icon/chevron-right.svg|">
+            </a>
+        </ul>
     </div>
 </div>
 <script href="/static/bootstrap.min.js" th:href="|/bootstrap.min.js|"></script>
