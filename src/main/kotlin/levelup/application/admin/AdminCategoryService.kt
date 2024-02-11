@@ -12,4 +12,8 @@ class AdminCategoryService(
 ) {
     fun create(name: String, description: String) =
         categoryRepository.save(Category(name = name, description = description))
+
+    fun delete(categoryId: Long) {
+        categoryRepository.deleteById(categoryId)
+    }
 }

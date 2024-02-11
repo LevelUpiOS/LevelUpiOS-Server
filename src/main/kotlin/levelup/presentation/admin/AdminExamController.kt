@@ -35,4 +35,10 @@ class AdminExamController(
         adminExamService.create(categoryId, form.name)
         return "redirect:$ADMIN_BASE_PATH"
     }
+
+    @PostMapping("/{examId}/delete")
+    fun delete(@PathVariable examId: Long): String {
+        adminExamService.delete(examId)
+        return "redirect:$ADMIN_BASE_PATH"
+    }
 }

@@ -9,9 +9,9 @@
 <div th:replace="~{admin/fragments/navbar.html::nav}"></div>
 <div class="container">
     <div class="hstack justify-content-between mb-3">
-        <h1>Category</h1>
+        <h1>LevelUPiOS</h1>
         <form action="/admin/categories/create">
-            <input class="btn btn-primary" type="submit" value="Add Category">
+            <input class="btn btn-primary" type="submit" value="카테고리 추가">
         </form>
     </div>
 
@@ -20,11 +20,11 @@
             <div class="d-flex align-items-baseline">
                 <h3 class="me-3 ms-2" th:text="${category.name}">Category Name</h3>
                 <span class="me-3 opacity-50" th:text="${category.description}">Category Description</span>
-                <span class="badge bg-primary rounded-pill" th:text="${category.exams.size()}">10</span>
             </div>
-            <form class="text-end" action="/admin/exams/create">
-                <input type="hidden" name="categoryId" value="1" th:value="${category.id}">
-                <input type="submit" class="btn btn-primary" value="Add Exam">
+            <form class="text-end" action="/admin/categories/1/delete" method="post"
+                  th:action="|/admin/categories/${category.id}/delete|"
+                  th:onsubmit="|return confirm('카테고리를 삭제합니다.')|">
+                <input type="submit" class="btn btn-danger" value="삭제">
             </form>
         </div>
         <div class="text-center" th:if="${category.exams.isEmpty()}">
@@ -34,9 +34,17 @@
             <a class="list-group-item d-flex justify-content-between align-items-center"
                th:href="|/admin/exams/${exam.id}|">
                 <span th:text="${exam.name}">Exam Name</span>
-                <img src="/static/icon/chevron-right.svg" th:src="|/icon/chevron-right.svg|">
+                <form action="/admin/exams/1" th:action="|/admin/exams/${exam.id}/delete|" method="post"
+                      th:onsubmit="|return confirm('시험을 삭제합니다.')|">
+                    <input class="btn btn-danger" type="submit" value="삭제">
+                </form>
             </a>
         </ul>
+
+        <form class="text-end mt-2" action="/admin/exams/create">
+            <input type="hidden" name="categoryId" th:value="|${category.id}|">
+            <input type="submit" class="btn btn-primary" value="시험 추가">
+        </form>
     </div>
 </div>
 <script href="/static/bootstrap.min.js" th:href="|/bootstrap.min.js|"></script>

@@ -5,6 +5,7 @@ import levelup.presentation.admin.dto.LoginForm
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
@@ -19,6 +20,12 @@ class AdminCategoryController(
     @PostMapping("/create")
     fun addCategory(@ModelAttribute loginForm: LoginForm): String {
         adminCategoryService.create(name = loginForm.name, description = loginForm.description)
+        return "redirect:$ADMIN_BASE_PATH"
+    }
+
+    @PostMapping("/{categoryId}/delete")
+    fun delete(@PathVariable categoryId: Long): String {
+        adminCategoryService.delete(categoryId)
         return "redirect:$ADMIN_BASE_PATH"
     }
 }
