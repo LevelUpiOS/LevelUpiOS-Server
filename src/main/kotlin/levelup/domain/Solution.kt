@@ -17,19 +17,26 @@ import support.SoftDeleteEntity
 @SQLDelete(sql = "UPDATE solution SET deleted_at = NOW() WHERE solution_id = ?")
 @SQLRestriction("deleted_at IS NULL")
 abstract class Solution(
-    val explanation: String = "",
+    var explanation: String = "",
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "solution_id")
     override val id: Long = 0L
 ) : SoftDeleteEntity() {
     abstract val answer: Any
+    abstract fun update(answer: Any, explanation: String)
 }
 
 @Entity
 @Table(name = "ox_solution")
 class OXSolution(
-    override val answer: Boolean,
+    override var answer: Boolean,
     explanation: String = "",
     id: Long = 0L
-) : Solution(explanation, id)
+) : Solution(explanation, id) {
+    override fun update(answer: Any, explanation: String) {
+        require(answer is Boolean) { "문제의 타입과 맞지 않습니다." }
+        this.answer = answer
+        this.explanation = explanation
+    }
+}

@@ -22,7 +22,7 @@ class Question(
     @JoinColumn(name = "exam_id")
     val exam: Exam,
 
-    val paragraph: String,
+    var paragraph: String,
 
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "solution_id")
@@ -35,4 +35,9 @@ class Question(
     fun isCompatible(answer: Any) = solution.answer::class == answer::class
 
     fun bookmark(user: User) = Bookmark(user, this)
+
+    fun update(paragraph: String, answer: Any, explanation: String) {
+        this.paragraph = paragraph
+        this.solution.update(answer, explanation)
+    }
 }

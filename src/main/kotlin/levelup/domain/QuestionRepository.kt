@@ -37,4 +37,10 @@ interface QuestionRepository : EntityRepository<Question, Long> {
             "FROM Bookmark b " +
             "WHERE b.user.id = :userId)")
     fun findBookmarkQuestionsInExam(userId: Long, examId: Long): Set<Question>
+
+    @Query("SELECT q " +
+            "FROM Question q " +
+            "JOIN FETCH q.solution " +
+            "WHERE q.id = :questionId")
+    fun findWithSolution(questionId: Long): Question
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 @RequestMapping("$ADMIN_BASE_PATH/exams")
 class AdminExamController(
-    private val examService: ExamService,
+    private val examService: ExamService
 ) {
     @GetMapping("/{examId}")
     fun exam(@PathVariable examId: Long, model: Model): String {

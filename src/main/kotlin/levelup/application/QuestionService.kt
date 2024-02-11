@@ -1,6 +1,7 @@
 package levelup.application
 
 import levelup.domain.BookmarkRepository
+import levelup.domain.Question
 import levelup.domain.QuestionRepository
 import levelup.domain.UserRepository
 import levelup.domain.delete
@@ -25,9 +26,18 @@ class QuestionService(
     @Transactional
     fun unmark(userId: Long, questionId: Long) = bookmarkRepository.delete(userId, questionId)
 
+    fun findWithSolution(questionId: Long) = questionRepository.findWithSolution(questionId)
+
     fun findAll() = questionRepository.findAll()
 
     fun findBookmarkQuestions(userId: Long) = questionRepository.findBookmarkQuestions(userId)
 
     fun findBookmarkQuestions(userId: Long, examId: Long) = questionRepository.findBookmarkQuestionsInExam(userId, examId)
+
+    @Transactional
+    fun update(questionId: Long, paragraph: String, answer: Any, explanation: String): Question {
+        val question = questionRepository.find(questionId)
+        question.update(paragraph, answer, explanation)
+        return question
+    }
 }
