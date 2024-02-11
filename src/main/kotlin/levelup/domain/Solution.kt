@@ -40,3 +40,8 @@ class OXSolution(
         this.explanation = explanation
     }
 }
+
+inline fun <reified T> createSolution(answer: T, explanation: String) = when (answer) {
+    is Boolean -> OXSolution(answer, explanation)
+    else -> throw IllegalArgumentException("지원하지 않는 정답 타입입니다. ${T::class.simpleName}")
+}
