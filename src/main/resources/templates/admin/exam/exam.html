@@ -12,7 +12,7 @@
         <h1 class="d-inline" th:text="${exam.name}">Exam Name</h1>
         <form action="/admin/questions/create">
             <input type="hidden" name="examId" th:value="|${exam.id}|">
-            <input class="btn btn-primary" type="submit" value="Add Question">
+            <input class="btn btn-primary" type="submit" value="문제 추가">
         </form>
     </div>
 
