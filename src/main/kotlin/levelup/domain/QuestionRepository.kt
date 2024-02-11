@@ -6,8 +6,8 @@ import support.EntityRepository
 interface QuestionRepository : EntityRepository<Question, Long> {
     @Query("SELECT DISTINCT e " +
             "FROM Exam e " +
-            "JOIN FETCH e.questions q " +
-            "JOIN FETCH q.solution s " +
+            "LEFT JOIN FETCH e.questions q " +
+            "LEFT JOIN FETCH q.solution s " +
             "WHERE e.id = :examId")
     fun findWithQuestions(examId: Long): Exam
 

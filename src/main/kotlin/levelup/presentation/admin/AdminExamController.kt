@@ -1,15 +1,21 @@
 package levelup.presentation.admin
 
 import levelup.application.ExamService
+import levelup.application.admin.AdminExamService
+import levelup.presentation.admin.dto.ExamCreateForm
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 @RequestMapping("$ADMIN_BASE_PATH/exams")
 class AdminExamController(
+    private val adminExamService: AdminExamService,
     private val examService: ExamService
 ) {
     @GetMapping("/{examId}")
@@ -17,5 +23,16 @@ class AdminExamController(
         val exam = examService.findWithQuestions(examId)
         model.addAttribute("exam", exam)
         return "admin/exam/exam"
+    }
+
+    @GetMapping("/create")
+    fun createForm(@RequestParam categoryId: Long): String {
+        return "admin/exam/add-form"
+    }
+
+    @PostMapping("/create")
+    fun create(@RequestParam categoryId: Long, @ModelAttribute form: ExamCreateForm): String {
+        adminExamService.create(categoryId, form.name)
+        return "redirect:$ADMIN_BASE_PATH"
     }
 }
