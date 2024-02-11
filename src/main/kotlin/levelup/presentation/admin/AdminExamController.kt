@@ -36,6 +36,19 @@ class AdminExamController(
         return "redirect:$ADMIN_BASE_PATH"
     }
 
+    @GetMapping("/{examId}/update")
+    fun updateForm(@PathVariable examId: Long, model: Model): String {
+        val exam = examService.find(examId)
+        model.addAttribute("exam", exam)
+        return "admin/exam/update-form"
+    }
+
+    @PostMapping("/{examId}/update")
+    fun update(@PathVariable examId: Long, @ModelAttribute form: ExamCreateForm): String {
+        adminExamService.update(examId, form.name)
+        return "redirect:$ADMIN_BASE_PATH"
+    }
+
     @PostMapping("/{examId}/delete")
     fun delete(@PathVariable examId: Long): String {
         adminExamService.delete(examId)

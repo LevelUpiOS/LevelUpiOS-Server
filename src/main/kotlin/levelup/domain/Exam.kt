@@ -21,7 +21,7 @@ class Exam(
     @JoinColumn(name = "category_id")
     val category: Category,
 
-    val name: String,
+    var name: String,
 
     @OneToMany(mappedBy = "exam")
     val questions: MutableList<Question> = mutableListOf(),
@@ -45,5 +45,9 @@ class Exam(
                 createAnswer(this, question, answer)
             }.toMutableList()
         }
+    }
+
+    fun update(name: String) {
+        this.name = name
     }
 }

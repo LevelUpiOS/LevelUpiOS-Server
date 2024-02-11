@@ -22,4 +22,7 @@ class ExamService(
     fun mark(userId: Long, examId: Long, answers: List<Any>) = submissionRepository.save(
         examRepository.findWithSolution(examId).mark(userRepository.find(userId), answers)
     )
+
+    @Transactional(readOnly = true)
+    fun find(examId: Long) = examRepository.find(examId)
 }

@@ -21,11 +21,17 @@
                 <h3 class="me-3 ms-2" th:text="${category.name}">Category Name</h3>
                 <span class="me-3 opacity-50" th:text="${category.description}">Category Description</span>
             </div>
-            <form class="text-end" action="/admin/categories/1/delete" method="post"
-                  th:action="|/admin/categories/${category.id}/delete|"
-                  th:onsubmit="|return confirm('카테고리를 삭제합니다.')|">
-                <input type="submit" class="btn btn-danger" value="삭제">
-            </form>
+            <div class="d-inline">
+                <form class="d-inline" action="/admin/categories/1/update"
+                      th:action="|/admin/categories/${category.id}/update|">
+                    <input type="submit" class="btn btn-primary" value="수정">
+                </form>
+                <form class="d-inline" action="/admin/categories/1/delete" method="post"
+                      th:action="|/admin/categories/${category.id}/delete|"
+                      th:onsubmit="|return confirm('카테고리를 삭제합니다.')|">
+                    <input type="submit" class="btn btn-danger" value="삭제">
+                </form>
+            </div>
         </div>
         <div class="text-center" th:if="${category.exams.isEmpty()}">
             <span class="text-secondary">시험이 없습니다.</span>
@@ -34,10 +40,17 @@
             <a class="list-group-item d-flex justify-content-between align-items-center"
                th:href="|/admin/exams/${exam.id}|">
                 <span th:text="${exam.name}">Exam Name</span>
-                <form action="/admin/exams/1" th:action="|/admin/exams/${exam.id}/delete|" method="post"
-                      th:onsubmit="|return confirm('시험을 삭제합니다.')|">
-                    <input class="btn btn-danger" type="submit" value="삭제">
-                </form>
+                <div class="d-inline">
+                    <form class="d-inline" action="/admin/exams/1"
+                          th:action="|/admin/exams/${exam.id}/update|">
+                        <input class="btn btn-primary" type="submit" value="수정">
+                    </form>
+                    <form class="d-inline" action="/admin/exams/1"
+                          th:action="|/admin/exams/${exam.id}/delete|" method="post"
+                          th:onsubmit="|return confirm('시험을 삭제합니다.')|">
+                        <input class="btn btn-danger" type="submit" value="삭제">
+                    </form>
+                </div>
             </a>
         </ul>
 

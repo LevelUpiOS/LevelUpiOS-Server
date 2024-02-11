@@ -18,6 +18,12 @@ class AdminExamService(
         return examRepository.save(Exam(category, name))
     }
 
+    fun update(examId: Long, name: String): Exam {
+        val exam = examRepository.find(examId)
+        exam.update(name)
+        return exam
+    }
+
     fun delete(examId: Long) {
         examRepository.deleteById(examId)
     }

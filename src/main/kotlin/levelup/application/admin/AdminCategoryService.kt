@@ -4,6 +4,7 @@ import levelup.domain.Category
 import levelup.domain.CategoryRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import support.find
 
 @Service
 @Transactional
@@ -15,5 +16,10 @@ class AdminCategoryService(
 
     fun delete(categoryId: Long) {
         categoryRepository.deleteById(categoryId)
+    }
+
+    fun update(categoryId: Long, name: String, description: String) {
+        val category = categoryRepository.find(categoryId)
+        category.update(name, description)
     }
 }

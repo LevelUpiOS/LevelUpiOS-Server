@@ -23,4 +23,9 @@ class Category(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     override val id: Long = 0L
-) : SoftDeleteEntity()
+) : SoftDeleteEntity() {
+    fun update(name: String, description: String) {
+        this.name = name
+        this.description = description
+    }
+}
