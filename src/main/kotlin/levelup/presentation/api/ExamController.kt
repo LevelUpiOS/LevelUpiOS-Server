@@ -45,6 +45,7 @@ class ExamController(
         @RequestBody request: ExamSolveRequest
     ): ResponseEntity<SubmissionResponse> {
         val submission = examService.mark(loginId, examId, request.answers)
-        return ResponseEntity.ok(SubmissionResponse(submission))
+        val bookmarkQuestions = questionService.findBookmarkQuestions(loginId, examId)
+        return ResponseEntity.ok(SubmissionResponse(submission, bookmarkQuestions))
     }
 }

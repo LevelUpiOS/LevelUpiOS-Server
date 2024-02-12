@@ -2,6 +2,7 @@ package levelup.presentation.api
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import levelup.application.QuestionService
 import levelup.application.SubmissionService
 import levelup.presentation.api.dto.SubmissionResponse
 import levelup.presentation.api.dto.SubmissionScoreListResponse
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/submissions")
 class SubmissionController(
+    private val questionService: QuestionService,
     private val submissionService: SubmissionService
 ) {
     @Operation(
@@ -33,8 +35,9 @@ class SubmissionController(
         description = "Submission의 시험 점수나 채점 결과 반환"
     )
     @GetMapping("/{submissionId}")
-    fun findSubmission(@PathVariable submissionId: Long): ResponseEntity<SubmissionResponse> {
+    fun findSubmission(@RequestAttribute loginId: Long, @PathVariable submissionId: Long): ResponseEntity<SubmissionResponse> {
         val submission = submissionService.findWithAnswers(submissionId)
-        return ResponseEntity.ok(SubmissionResponse(submission))
+        val bookmarkQuestions = questionService.findBookmarkQuestions(loginId, submission.exam.id)
+        return ResponseEntity.ok(SubmissionResponse(submission, bookmarkQuestions))
     }
 }
