@@ -1,5 +1,6 @@
 package levelup.domain
 
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import support.EntityRepository
 
@@ -43,4 +44,12 @@ interface QuestionRepository : EntityRepository<Question, Long> {
             "JOIN FETCH q.solution " +
             "WHERE q.id = :questionId")
     fun findWithSolution(questionId: Long): Question
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Question q " +
+            "SET q.deletedAt = NOW() " +
+            "WHERE q.exam.category.id = :categoryId")
+    fun deleteByCategoryId(categoryId: Long)
+
+    fun deleteByExamId(examId: Long)
 }

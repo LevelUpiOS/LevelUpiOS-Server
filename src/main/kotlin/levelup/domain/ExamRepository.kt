@@ -10,4 +10,6 @@ interface ExamRepository : EntityRepository<Exam, Long> {
             "JOIN FETCH q.solution s " +
             "WHERE e.id = :examId")
     fun findWithSolution(examId: Long): Exam
+
+    fun deleteByCategoryId(categoryId: Long)
 }
