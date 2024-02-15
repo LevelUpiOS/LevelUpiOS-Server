@@ -61,7 +61,6 @@ CREATE TABLE question
 CREATE TABLE users
 (
     user_id    BIGINT     NOT NULL AUTO_INCREMENT,
-    role       VARCHAR(5) NOT NULL,
     created_at DATETIME   NOT NULL DEFAULT NOW(),
     updated_at DATETIME   NOT NULL DEFAULT NOW(),
     deleted_at DATETIME            DEFAULT NULL,
